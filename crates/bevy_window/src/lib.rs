@@ -88,6 +88,7 @@ impl Plugin for WindowPlugin {
             .add_event::<WindowBackendScaleFactorChanged>()
             .add_event::<FileDragAndDrop>()
             .add_event::<WindowMoved>()
+            .add_system(release_inputs_on_lost_focus)
             .init_resource::<Windows>();
 
         let settings = app

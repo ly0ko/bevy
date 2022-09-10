@@ -55,3 +55,16 @@ pub fn close_on_esc(
         }
     }
 }
+
+pub fn release_inputs_on_lost_focus(
+    mut focused: Local<Option<WindowId>>,
+    mut focused_events: EventReader<WindowFocused>,
+    mut input: ResMut<Input<KeyCode>>,
+) {
+    for event in focused_events.iter() {
+        *focused = event.focused.then(|| event.id);
+        if !event.focused {
+            input.release_all();
+        }
+    }
+}
